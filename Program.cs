@@ -17,11 +17,9 @@ namespace LibraryManagementSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add Database Context
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Add Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -33,7 +31,6 @@ namespace LibraryManagementSystem
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            // Add JWT Authentication
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is missing from configuration.");
 
@@ -57,7 +54,7 @@ namespace LibraryManagementSystem
                 };
             });
 
-            // Add services to the container.
+            
             builder.Services.AddControllers();
 
             builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
@@ -68,7 +65,6 @@ namespace LibraryManagementSystem
             builder.Services.AddScoped<IBookCopyService, BookCopyService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -101,7 +97,6 @@ namespace LibraryManagementSystem
 
             app.UseMiddleware<LibraryManagementSystem.Middleware.GlobalExceptionHandlingMiddleware>();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -110,7 +105,6 @@ namespace LibraryManagementSystem
 
             app.UseHttpsRedirection();
 
-            // Middleware order is important: Authentication then Authorization
             app.UseAuthentication();
             app.UseAuthorization();
 
