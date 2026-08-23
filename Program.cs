@@ -12,7 +12,7 @@ namespace LibraryManagementSystem
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +34,7 @@ namespace LibraryManagementSystem
 
             // Add JWT Authentication
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-            var secretKey = jwtSettings["SecretKey"] ?? "SuperSecretKeyForLibraryManagementSystem_ChangeInProduction123!";
+            var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is missing from configuration.");
 
             builder.Services.AddAuthentication(options =>
             {
@@ -76,25 +76,25 @@ namespace LibraryManagementSystem
             using (var scope = app.Services.CreateScope())
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                if (userManager.FindByEmailAsync("admin@library.com").Result == null)
+                if (await userManager.FindByEmailAsync("admin@library.com") == null)
                 {
                     var user = new ApplicationUser { UserName = "admin", Email = "admin@library.com", FirstName = "Admin", LastName = "User", IsActive = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow };
-                    userManager.CreateAsync(user, "Admin123!").Wait();
-                    userManager.AddToRoleAsync(user, LibraryManagementSystem.Common.Constants.AppRoles.Administrator).Wait();
+                    await userManager.CreateAsync(user, "Admin123!");
+                    await userManager.AddToRoleAsync(user, LibraryManagementSystem.Common.Constants.AppRoles.Administrator);
                 }
 
-                if (userManager.FindByEmailAsync("librarian@library.com").Result == null)
+                if (await userManager.FindByEmailAsync("librarian@library.com") == null)
                 {
                     var user = new ApplicationUser { UserName = "librarian", Email = "librarian@library.com", FirstName = "Librarian", LastName = "User", IsActive = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow };
-                    userManager.CreateAsync(user, "Librarian123!").Wait();
-                    userManager.AddToRoleAsync(user, LibraryManagementSystem.Common.Constants.AppRoles.Librarian).Wait();
+                    await userManager.CreateAsync(user, "Librarian123!");
+                    await userManager.AddToRoleAsync(user, LibraryManagementSystem.Common.Constants.AppRoles.Librarian);
                 }
 
-                if (userManager.FindByEmailAsync("staff@library.com").Result == null)
+                if (await userManager.FindByEmailAsync("staff@library.com") == null)
                 {
                     var user = new ApplicationUser { UserName = "staff", Email = "staff@library.com", FirstName = "Staff", LastName = "User", IsActive = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow };
-                    userManager.CreateAsync(user, "Staff123!").Wait();
-                    userManager.AddToRoleAsync(user, LibraryManagementSystem.Common.Constants.AppRoles.Staff).Wait();
+                    await userManager.CreateAsync(user, "Staff123!");
+                    await userManager.AddToRoleAsync(user, LibraryManagementSystem.Common.Constants.AppRoles.Staff);
                 }
             }
 
