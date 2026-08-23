@@ -14,7 +14,7 @@ library staff users.
 
 ## Architecture
 
-The application uses a simple N-Tier structure:
+I chose a simple N-Tier architecture because it is suitable for the scope and requirements of this project. If the system grows and requires more separation between business logic and data access, Repository and Unit of Work patterns could be introduced. For a larger and more complex system, the architecture could further evolve toward Clean Architecture to provide stronger separation of concerns and better testability.
 
 - **Controllers** – Handle HTTP requests and responses.
 - **Services** – Contain the business logic.
@@ -23,8 +23,7 @@ The application uses a simple N-Tier structure:
 - **Middleware** – Handles exceptions globally.
 - **Identity & JWT** – Handle authentication and role-based authorization.
 
-I kept the architecture simple and did not add a Repository pattern because
-EF Core already provides the database abstraction needed for this project.
+
 
 ## Design Decisions
 
