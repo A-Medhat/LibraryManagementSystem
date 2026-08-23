@@ -133,7 +133,6 @@ The main relationships are:
 
 ## SQL Scripts
 
-The SQL scripts are included in the `SQL` folder:
+The complete database schema and sample data script is included in the `SQL` folder:
 
-- [Database Script](SQL/Database.sql)
-- [Sample Data](SQL/SeedData.sql)
+- [Database Script with Sample Data](SQL/LibraryManagementSystem.sql)
