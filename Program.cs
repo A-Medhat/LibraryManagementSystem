@@ -3,6 +3,7 @@ using LibraryManagementSystem.Data;
 using LibraryManagementSystem.Models.Entities;
 using LibraryManagementSystem.Services;
 using LibraryManagementSystem.Services.Interfaces;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,7 @@ namespace LibraryManagementSystem
                     ValidIssuer = jwtSettings["Issuer"],
                     ValidAudience = jwtSettings["Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                    RoleClaimType = ClaimTypes.Role
                 };
             });
 
