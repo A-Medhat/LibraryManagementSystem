@@ -129,70 +129,7 @@ The main relationships are:
 
 ### ERD
 
-```mermaid
-erDiagram
-    Publisher ||--o{ Book : publishes
-    Author }o--o{ Book : writes
-    Category }o--o{ Book : categorizes
-    Category ||--o{ Category : "parent/child"
-    Book ||--o{ BookCopy : "has copies"
-    Member ||--o{ BorrowingTransaction : borrows
-    BookCopy ||--o{ BorrowingTransaction : "is borrowed"
-    ApplicationUser ||--o{ UserActivityLog : logs
-
-    Publisher {
-        int PublisherId PK
-        string Name
-    }
-    Author {
-        int AuthorId PK
-        string FirstName
-        string LastName
-    }
-    Category {
-        int CategoryId PK
-        string Name
-        int ParentCategoryId FK "nullable"
-    }
-    Book {
-        int BookId PK
-        string ISBN "unique"
-        string Title
-        int PublisherId FK
-    }
-    BookCopy {
-        int CopyId PK
-        int BookId FK
-        string Barcode "unique"
-        string Status "Available/Borrowed/Lost"
-    }
-    Member {
-        int MemberId PK
-        string MembershipNumber "unique"
-        string FirstName
-        string LastName
-    }
-    BorrowingTransaction {
-        int TransactionId PK
-        int CopyId FK
-        int MemberId FK
-        DateTime BorrowDate
-        DateTime DueDate
-        DateTime ReturnDate "nullable"
-    }
-    ApplicationUser {
-        string Id PK
-        string UserName
-        string Email
-        string Role
-    }
-    UserActivityLog {
-        int LogId PK
-        string UserId FK
-        string Action
-        string Entity
-    }
-```
+![ERD](docs/ERD.png)
 
 ## SQL Scripts
 
