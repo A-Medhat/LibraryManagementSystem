@@ -116,15 +116,21 @@ appropriate HTTP responses, keeping controllers simple.
 
 ## Database Design
 
-The main relationships are:
+Main Relationships
 
-- Book → BookCopies: 1-to-Many
-- Book ↔ Authors: Many-to-Many
-- Book ↔ Categories: Many-to-Many
-- Publisher → Books: 1-to-Many
-- Member → BorrowingTransactions: 1-to-Many
-- BookCopy → BorrowingTransactions: 1-to-Many
-- ApplicationUser → ActivityLogs: 1-to-Many
+Book → BookCopies: 1-to-Many — a book represents a title and can have multiple physical copies, while each physical copy belongs to one specific book.
+
+Book ↔ Authors: Many-to-Many — a book can have multiple authors, and an author can write multiple books. This relationship is handled through the BookAuthor junction table.
+
+Book ↔ Categories: Many-to-Many — a book can belong to multiple categories, and a category can contain multiple books. This relationship is handled through the BookCategory junction table.
+
+Publisher → Books: 1-to-Many — a publisher can publish multiple books, while each book is associated with one publisher.
+
+Member → BorrowingTransactions: 1-to-Many — a member can have multiple borrowing transactions over time, while each borrowing transaction belongs to one member.
+
+BookCopy → BorrowingTransactions: 1-to-Many — a physical book copy can be involved in multiple borrowing transactions over its lifetime, while each borrowing transaction refers to one specific copy.
+
+ApplicationUser → ActivityLogs: 1-to-Many — a system user can perform multiple actions that are recorded in the activity log, while each activity log entry belongs to the user who performed that action.
 
 ### ERD
 
